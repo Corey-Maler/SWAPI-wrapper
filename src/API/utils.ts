@@ -4,6 +4,7 @@ export type ID = string | number;
 const likeCURLRexexp = /\/\w+\/\d+\/$/g;
 
 export function isCurl(x: any): x is CURL {
+	console.log('>> ', x);
 	return typeof x === 'string' && likeCURLRexexp.test(x);
 }
 

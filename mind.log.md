@@ -173,3 +173,7 @@ I just noticed that all this staff with Base class and prototype extension is us
 Even more, now all this methods like "getVehicleList" is public and global, you can easily get access to them, but using internal object will hide it.
 
 No, with base class it looks more nice, so I will use it anyway. (Of course in real world I will use most satisfied way, not more beautiful)
+
+###########################
+
+In this moment I think that there are still thousands places to improve. But let me show, how will I implement Cache strategy by modules and I think, that it's enought

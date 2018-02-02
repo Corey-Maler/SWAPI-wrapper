@@ -20,6 +20,7 @@
     "variable-name": [true, "ban-keywords", "check-format", "allow-leading-underscore"],
     "trailing-comma": true,
     "semicolon": false,
+    "interface-name": false,
     "arrow-parens": false
   },
   "rulesDirectory": []

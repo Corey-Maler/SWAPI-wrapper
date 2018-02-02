@@ -1,5 +1,7 @@
 import { ID, isCurl, isID, CURL, getCurl} from './utils';
 
+import { CacheStrategy } from './CacheStrategies/types';
+
 export class Base<T> {
 	public static root = 'https://swapi.co/api';
 
@@ -42,14 +44,27 @@ export class Base<T> {
 	}
 }
 
+let currentCacheStrategy: CacheStrategy<any> | null = null;
+
 export const backend = {
 	get(id: ID | CURL, path: string) {
 		let query;
-		if (isCurl(id)) {
+		if (typeof id === 'string' && id.includes(path)) {
 			query = id;
 		} else {
 			query = Base.root + path + id + '/';
 		}
-		return fetch(query).then(response => response.json());
+
+		let request;
+		if (currentCacheStrategy !== null && currentCacheStrategy.has(query)) {
+			request = currentCacheStrategy.get(query);
+		} else {
+			request = fetch(query);
+		}
+
+		return request.then((response: any) => response.json());
+	},
+	setCacheStrategy(cs: CacheStrategy<any> | null) {
+		currentCacheStrategy = cs;
 	}
 };
