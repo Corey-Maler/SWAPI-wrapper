@@ -5,3 +5,13 @@ This is initial commit and I will use this file to log most of my minds while de
 I will start from searching some webpack-typescript-lib boilerplate.
 
 https://github.com/lomboboo/webpack-typescript-boilerplate this one looks good and enought modern. Use it.
+
+"Error: Cannot find module 'hard-source-webpack-plugin'" -- not so good boilerplate :) Let's fix it.
+
+Problem caused by windows: package can't be installed on this OS. Okay, I'll try to use bash-in-windows (I hate npm modules that requires compilation. There are always problems with them).
+
+"Module build failed: Error: Node Sass does not yet support your current environment: Linux 64-bit with Unsupported runtime (59)" Did I mention that I hate native modules? node-sass probably most-annoying from them.
+
+Blue Screen Of Death. I'm lucky today.
+
+Okay, let's just clean src and boilerpate and finally start coding.
