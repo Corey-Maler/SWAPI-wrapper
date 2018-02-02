@@ -1,5 +1,5 @@
 {
-  "defaultSeverity": "error",
+  "defaultSeverity": "warning",
   "extends": [
     "tslint:recommended"
   ],
@@ -16,8 +16,11 @@
     "comment-format": false,
     "quotemark": false,
     "object-literal-sort-keys": false,
+    "indent": [true, "tabs"],
     "variable-name": [true, "ban-keywords", "check-format", "allow-leading-underscore"],
-    "trailing-comma": true
+    "trailing-comma": true,
+    "semicolon": false,
+    "arrow-parens": false
   },
   "rulesDirectory": []
 }

@@ -50,7 +50,7 @@ module.exports = function () {
         {
           test: /\.ts$/,
           loaders: [ 'awesome-typescript-loader' ],
-          include: help.root( 'src/app' )
+          include: help.root( 'src' )
         },
         {
           test: /\.ts$/,

@@ -15,3 +15,73 @@ Problem caused by windows: package can't be installed on this OS. Okay, I'll try
 Blue Screen Of Death. I'm lucky today.
 
 Okay, let's just clean src and boilerpate and finally start coding.
+
+
+So, when everything is ready for work, is better time to think how exactly I will implement it.
+
+Correct way to implement it:
+
+- main module, that allow us to use different backend (we can choose and extends to use XML instead JSON, for example)
+- standard backend with fetch api
+- modules that implement parts of query, for example vechicle or plane
+
+Then code will looks like:
+```
+import * as SWAPI from 'swapi';
+import { jsonBackend } from 'swapi/backends';
+
+SWAPI.setBackend(jsonBackend);
+// SWAPI.authorize(credentials); // there is no authorization in SWAPI.co, I know, this is just an example
+```
+
+and usage
+```
+import * as Planet from 'swapi/planet';
+import * as Character from 'swapi/character';
+
+async function getPlanet() {
+	const planet = await Planet.get('id');
+}
+
+async function getListOfCharactesNames(film) {
+	const characters = await Promise.all(film.characters.map(character =>  Character.get(character)))
+	return characters.map(character => character.name);
+}
+
+Character.search('Luke') // => promise with list of Lukes.
+```
+
+Somewhere inside it should contains cache to reduce queries and time.
+
+This way is good enought: easy to use, easy to extend, support tree-shaking and a lot of another benifits.
+
+BUT!
+
+But this way is boring. I want to get something interesting, funny. Let's say I want next API:
+
+```
+
+const NewHope = await Film.findExactly('A New Hope');
+
+for (const character of Film.characters) {
+	console.log(character.name);
+}
+
+```
+
+We can do it by recursivity loading whole data. What is really bad. Or use sync requests.
+But we have async generators ( https://github.com/jhusain/asyncgenerator )!
+What? Widtdrawown? Three years ago? Okay. Sad. js-observable is not way to use there.
+
+So, let's than implement something like this:
+
+```
+const character = await Film.characters[0];
+console.log(character.name);
+```
+
+Then will decide what to do with loops.
+
+######################################
+
+First part is basic API, some abstract classes, class hierarchy.
