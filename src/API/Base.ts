@@ -1,8 +1,11 @@
 import { ID, isCurl, isID, CURL} from './utils';
 
 export class Base {
-
 	public static root = 'https://swapi.co/api';
+
+	public getCharactersList(data: any) {
+		return data.characters;
+	}
 }
 
 export const backend = {

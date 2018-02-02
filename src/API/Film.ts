@@ -7,6 +7,15 @@ export class Film extends Base {
 		super();
 
 		this.data = data;
+
+		this.test(data);
+	}
+
+	private async test(data: any) {
+		const aa = await this.getCharactersList(data);
+		console.log('from circuit dep', aa);
+		const character0 = await aa[0];
+		console.log('character from lazy factory', character0.name);
 	}
 
 	/**

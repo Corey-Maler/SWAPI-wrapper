@@ -146,3 +146,5 @@ P.S. After calling class as "lazy array" I'm pretty sure that this library exist
 Works just perfect!
 
 (Oh, yes, I hope you are using one of this https://caniuse.com/#search=proxy browsers. This)
+
+So. Proxy works. Let's finally implement `Characters` property in `Film` class.
