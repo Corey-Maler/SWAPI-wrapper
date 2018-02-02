@@ -1,21 +1,28 @@
 import { Base, backend} from './Base';
-import { CURL, ID } from './utils';
+import { CURL, ID, getCurl } from './utils';
+import { getLazyArray } from './LazyArray';
 
-export class Film extends Base {
-	private data: any;
+export class Film extends Base<any> {
+	// Okay. For typescript nothing wrong with this string
+	// but if we will export it as js library
+	// everybody can change it
+	// or not? Actually I don't know, does typescript set "modifieble" to false
+	// with Object.defineProperty
+	public readonly characters: any;
+	public readonly planets: any;
+
+	public readonly starships: any;
+	public readonly vehicles: any;
+	public readonly species: any;
+
 	constructor(data: any) {
-		super();
+		super(data);
 
-		this.data = data;
-
-		this.test(data);
-	}
-
-	private async test(data: any) {
-		const aa = await this.getCharactersList(data);
-		console.log('from circuit dep', aa);
-		const character0 = await aa[0];
-		console.log('character from lazy factory', character0.name);
+		this.characters = this.getCharactersList(data);
+		this.planets = this.getPlanetsList(data);
+		this.starships = this.getStarshipList(data);
+		this.vehicles = this.getVehicleList(data);
+		this.species = this.getSpeciesList(data);
 	}
 
 	/**
@@ -53,18 +60,17 @@ export class Film extends Base {
 	public get releaseDate(): string {
 		return this.data.release_date;
 	}
-
-	/**
-	 * CURL of data
-	 */
-	public get curl(): string {
-		return 'curl ' + this.data.url;
-	}
 }
 
 export const get = async (id: CURL | ID) => {
 	const data = await backend.get(id, '/films/');
 	return new Film(data);
+}
+
+// little trick to make it support modules
+Base.prototype.getFilmList = (data: any) => {
+	const urls = data.films;
+	return getLazyArray(urls, get);
 }
 
 /*

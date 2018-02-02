@@ -148,3 +148,28 @@ Works just perfect!
 (Oh, yes, I hope you are using one of this https://caniuse.com/#search=proxy browsers. This)
 
 So. Proxy works. Let's finally implement `Characters` property in `Film` class.
+
+Sounds strange, but now completed most of libraty. I mean okay, it still contains only two methods, no typeguarding, no caching, nothing. But in fact -- everything what last is just a lot of "monkey-coding". Skeleton is ready :)
+
+You may ask me: what is going on? Why in `Base` class a lot of methods like 
+```
+public getCharactersList(data: any) {
+	return data.characters;
+}
+```
+
+What is ```Base.prototype.getCharactersList```? Why didn't you implement this method inside Base class?
+
+Okay. First of all -- circular dependency is not good idea. In fact it even doesn't work properly, caz can't define classes in this way. Probably this is error in typesript compiler or webpack builder, it should work with es6 imports.
+
+Secondly -- it allow you to extends your library. If you don't need "Character" -- it will not load code of this class. If you need -- you can import this file and it will authomaticly mount to base prototype and works just fine. In fact RXJS5 modules system builder based on this idea. Check https://github.com/ReactiveX/rxjs/blob/master/src/add/operator/audit.ts
+
+Unfortunately in typescript it's pretty tricky. Really tricky, in vanillaJS this is a really good way to make your library modular and extendable.
+
+So, now I will just fulfiel last part of code, create more classes and so on.
+
+I just noticed that all this staff with Base class and prototype extension is useless in this particular case. Use can use just singletone object "DataProcessors" instead.
+
+Even more, now all this methods like "getVehicleList" is public and global, you can easily get access to them, but using internal object will hide it.
+
+No, with base class it looks more nice, so I will use it anyway. (Of course in real world I will use most satisfied way, not more beautiful)

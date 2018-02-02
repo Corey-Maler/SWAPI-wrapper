@@ -11,3 +11,7 @@ export function isID(x: any): x is ID {
 	return !isCurl(x); // Okay, this is definitely wrong. Actually I don't know possible schematics
 	// in this particular task this is enought.
 }
+
+export function getCurl(data: any): string {
+	return 'CURL ' + this.data.url;
+}
