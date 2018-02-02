@@ -14,9 +14,10 @@
     "prefer-const": false,
     "no-console": false,
     "comment-format": false,
+    "quotemark": false,
     "object-literal-sort-keys": false,
     "variable-name": [true, "ban-keywords", "check-format", "allow-leading-underscore"],
-    "trailing-comma": false
+    "trailing-comma": true
   },
   "rulesDirectory": []
 }
