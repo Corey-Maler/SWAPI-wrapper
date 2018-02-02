@@ -140,3 +140,9 @@ for (let i = 0; i < 1000; i++) {
 But I want something new and interesting. I've never used es6 Proxy. I really beilive that their time become right now! (Actually at this moment I'm not sure that this will work, so, real-time experiment in test task. Why not?)
 
 And let's make this file as markdown.
+
+P.S. After calling class as "lazy array" I'm pretty sure that this library exists. At least sounds cool!
+
+Works just perfect!
+
+(Oh, yes, I hope you are using one of this https://caniuse.com/#search=proxy browsers. This)
