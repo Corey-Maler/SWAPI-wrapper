@@ -85,3 +85,12 @@ Then will decide what to do with loops.
 ######################################
 
 First part is basic API, some abstract classes, class hierarchy.
+
+Okay it works. Let's go deeper. Current tslint little bit annoying. In work I use from microsoft with some tweaks.
+
+So, why getters? Why I choose this way to implement class?
+1. This data is readonly by defenition.
+2. It will take a lot of code and bytes in final code, but this allow you to describe every single line of object. When somebody will use this class, he can just type film.producer and "IntelliSense" (in vscode, I don't know how this called in IDEA) will show defenition of field.
+Of course we can make some "magic" in declaration file and extend given data with custom fields. It will take much less memory, code, but still will be useful in case of IDE suggestions. From other side it will increase probability of mistakes and will take more time. So, just for test task getters is enought.
+
+Film close to be completed. But last 5 properties is the most interesting part. Let's first implement basic Character class.
