@@ -177,3 +177,27 @@ No, with base class it looks more nice, so I will use it anyway. (Of course in r
 ###########################
 
 In this moment I think that there are still thousands places to improve. But let me show, how will I implement Cache strategy by modules and I think, that it's enought
+
+## Summary
+
+For now there is implemented:
+- module structure. You can easily extend and import what you want, you can change cache strategy
+- lazy loading
+- interesting ORM-like API
+
+What have to be implemented:
+- strong types. No more "any"
+- different backends
+- documentation
+
+### How it works
+
+You have some system utilities, and entry point (/API/index.ts). Via entry point you can configure this api library. Entry point just store you configuration in it's own scope, but this configuration is singlepoint. In most cases this is bad behaviour, but if your library can't be attached twice on the same page -- you can use this method.
+
+All entries of API saved in different files and nowhere included. When user include this file it authomaticly patches base class prototype and this single class now available throuhgt another classes.
+
+If some class included, you can easily get object of it, passing throught property in another. For example, if you include both Character and Film classes, you can in Film class object write:
+```
+const character = await film.characters[0];
+character.name // Luke Skywalker
+```
