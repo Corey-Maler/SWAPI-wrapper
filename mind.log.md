@@ -105,3 +105,38 @@ First of all, we have problem: method "get" requires id as number, but inside fi
 Let's make two different types and typeguards. It will help us in future.
 
 Done.
+
+
+Now I wanna make possible to use API in next case:
+```
+const aNewHope = Film.get(1);
+const character = await aNewHope.characters[0];
+console.log(character.name);
+```
+
+The problem is how to make it "lazy". Of couse we do something like 
+```
+class Whatever {
+	constructor(data: WhateverData) {
+		this.data = data;
+		this.charactersRequests = this.data.characters.map(curl => Character.get(curl));
+	}
+}
+```
+
+But this means that after loading film we will load all characters just in few seconds even if we never use them.
+
+Obserable (like rxjs) can be lazy. But in this particular task they are overhead.
+
+We can make pseudo-array with thousands of getters for i = 0..1000, like in mobx. In mobx it works just fine.
+
+In fact you then code will look like:
+```
+for (let i = 0; i < 1000; i++) {
+	Object.defineProperty(this, ...);
+}
+```
+
+But I want something new and interesting. I've never used es6 Proxy. I really beilive that their time become right now! (Actually at this moment I'm not sure that this will work, so, real-time experiment in test task. Why not?)
+
+And let's make this file as markdown.
