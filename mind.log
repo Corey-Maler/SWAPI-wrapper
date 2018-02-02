@@ -93,4 +93,8 @@ So, why getters? Why I choose this way to implement class?
 2. It will take a lot of code and bytes in final code, but this allow you to describe every single line of object. When somebody will use this class, he can just type film.producer and "IntelliSense" (in vscode, I don't know how this called in IDEA) will show defenition of field.
 Of course we can make some "magic" in declaration file and extend given data with custom fields. It will take much less memory, code, but still will be useful in case of IDE suggestions. From other side it will increase probability of mistakes and will take more time. So, just for test task getters is enought.
 
+Can I skip getters declaration part? It has to be done in real world and I will complete it after sending results, but for time-saving I'll skip it.
+
 Film close to be completed. But last 5 properties is the most interesting part. Let's first implement basic Character class.
+
+I just noticed that "data" has "any" type. This is really bad. It should has a real type. But I'll leave it like that for now.
