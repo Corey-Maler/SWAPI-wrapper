@@ -1,4 +1,5 @@
-import { Base } from './Base';
+import { Base, backend} from './Base';
+import { CURL, ID } from './utils';
 
 export class Film extends Base {
 	private data: any;
@@ -52,8 +53,8 @@ export class Film extends Base {
 	}
 }
 
-export const get = async (id: string) => {
-	const data = await Base.backend(`/films/${id}`);
+export const get = async (id: CURL | ID) => {
+	const data = await backend.get(id, '/films/');
 	return new Film(data);
 }
 

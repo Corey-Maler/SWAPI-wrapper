@@ -98,3 +98,10 @@ Can I skip getters declaration part? It has to be done in real world and I will 
 Film close to be completed. But last 5 properties is the most interesting part. Let's first implement basic Character class.
 
 I just noticed that "data" has "any" type. This is really bad. It should has a real type. But I'll leave it like that for now.
+
+Now let's connect them. Let's film.characters[0] will return promise with Character class in resolution.
+
+First of all, we have problem: method "get" requires id as number, but inside film response it's a string.
+Let's make two different types and typeguards. It will help us in future.
+
+Done.

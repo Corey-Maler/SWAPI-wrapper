@@ -1,7 +1,18 @@
-export class Base {
-	public static backend(path: string) {
-		return fetch(Base.root + path).then(response => response.json());
-	};
+import { ID, isCurl, isID, CURL} from './utils';
 
-	private static root = 'https://swapi.co/api';
+export class Base {
+
+	public static root = 'https://swapi.co/api';
 }
+
+export const backend = {
+	get(id: ID | CURL, path: string) {
+		let query;
+		if (isCurl(id)) {
+			query = id;
+		} else {
+			query = Base.root + path + id + '/';
+		}
+		return fetch(query).then(response => response.json());
+	}
+};
