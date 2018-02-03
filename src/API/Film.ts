@@ -1,6 +1,7 @@
 import { Base, backend} from './Base';
 import { CURL, ID, getCurl } from './utils';
 import { getLazyArray } from './LazyArray';
+import { SearchResult } from './SearchResults';
 
 export class Film extends Base<any> {
 	// Okay. For typescript nothing wrong with this string
@@ -65,6 +66,11 @@ export class Film extends Base<any> {
 export const get = async (id: CURL | ID) => {
 	const data = await backend.get(id, '/films/');
 	return new Film(data);
+}
+
+export const search = async (query: string) => {
+	const data = await backend.get(`?search=${query}`, '/films/', false);
+	return new SearchResult(data, Film);
 }
 
 // little trick to make it support modules
