@@ -4,11 +4,8 @@ import { getLazyArray } from './LazyArray';
 import { SearchResult } from './SearchResults';
 
 export class Planet extends Base<any> {
-	public readonly films: any;
 	constructor(data: any) {
 		super(data);
-
-		this.films = this.getFilmList(data);
 	}
 
 	public get name(): string {
@@ -46,6 +43,10 @@ export class Planet extends Base<any> {
 	public get residents(): any {
 		return this.data.residents;
 	}
+
+	public get films(): CURL[] {
+		return this.data.films;
+	}
 }
 
 export const get = async (id: CURL | ID) => {
@@ -58,10 +59,20 @@ export const search = async (query: string) => {
 	return new SearchResult(data, Planet);
 }
 
+declare module './Base' {
+	// tslint:disable-next-line:no-shadowed-variable
+	interface Base<T> {
+		getPlanets(): Array<Promise<Planet>> | null;
+	}
+}
+
 // little trick to make it support modules
-Base.prototype.getPlanetsList = (data: any) => {
-	const urls = data.characters;
-	return getLazyArray(urls, get);
+Base.prototype.getPlanets = function() {
+	if (this.data.planets) {
+		return getLazyArray(this.data.planets, get);
+	}
+
+	return null;
 }
 
 /*

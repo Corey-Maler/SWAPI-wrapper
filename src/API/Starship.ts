@@ -9,11 +9,9 @@ export class Starship extends Base<any> {
 	// everybody can change it
 	// or not? Actually I don't know, does typescript set "modifieble" to false
 	// with Object.defineProperty
-	public readonly films: any;
 	constructor(data: any) {
 		super(data);
 
-		this.films = this.getFilmList(data);
 	}
 
 	public get name(): string {
@@ -71,6 +69,10 @@ export class Starship extends Base<any> {
 	public get pilots(): any[] {
 		return this.data.pilots;
 	}
+
+	public get films(): CURL[] {
+		return this.data.films[];
+	}
 }
 
 export const get = async (id: CURL | ID) => {
@@ -83,13 +85,23 @@ export const search = async (query: string) => {
 	return new SearchResult(data, Starship);
 }
 
-// little trick to make it support modules
-Base.prototype.getStarshipList = (data: any) => {
-	const urls = data.starships;
-	return getLazyArray(urls, get);
+declare module './Base' {
+	// tslint:disable-next-line:no-shadowed-variable
+	interface Base<T> {
+		getStarships(): Array<Promise<Starship>> | null;
+	}
 }
 
-/* 
+// little trick to make it support modules
+Base.prototype.getStarships = function() {
+	if (this.data.starships) {
+		return getLazyArray(this.data.starships, get);
+	}
+
+	return null;
+}
+
+/*
 {
 	"name": "Death Star",
 	"model": "DS-1 Orbital Battle Station",

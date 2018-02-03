@@ -9,21 +9,9 @@ export class Film extends Base<any> {
 	// everybody can change it
 	// or not? Actually I don't know, does typescript set "modifieble" to false
 	// with Object.defineProperty
-	public readonly characters: any;
-	public readonly planets: any;
-
-	public readonly starships: any;
-	public readonly vehicles: any;
-	public readonly species: any;
 
 	constructor(data: any) {
 		super(data);
-
-		this.characters = this.getCharactersList(data);
-		this.planets = this.getPlanetsList(data);
-		this.starships = this.getStarshipList(data);
-		this.vehicles = this.getVehicleList(data);
-		this.species = this.getSpeciesList(data);
 	}
 
 	/**
@@ -61,6 +49,22 @@ export class Film extends Base<any> {
 	public get releaseDate(): string {
 		return this.data.release_date;
 	}
+	public get characters(): CURL[] {
+		return this.data.characters;
+	}
+	public get planets(): CURL[] {
+		return this.data.planets;
+	}
+
+	public get starships(): CURL[] {
+		return this.data.starships;
+	}
+	public get vehicles(): CURL[] {
+		return this.data.vehicles;
+	}
+	public get species(): CURL[] {
+		return this.data.species;
+	}
 }
 
 export const get = async (id: CURL | ID) => {
@@ -73,10 +77,20 @@ export const search = async (query: string) => {
 	return new SearchResult(data, Film);
 }
 
+declare module './Base' {
+	// tslint:disable-next-line:no-shadowed-variable
+	interface Base<T> {
+		getFilms(): Array<Promise<Film>> | null;
+	}
+}
+
 // little trick to make it support modules
-Base.prototype.getFilmList = (data: any) => {
-	const urls = data.films;
-	return getLazyArray(urls, get);
+Base.prototype.getFilms = function() {
+	if (this.data.films) {
+		return getLazyArray(this.data.films, get);
+	}
+
+	return null;
 }
 
 /*

@@ -4,8 +4,7 @@ import { getLazyArray } from './LazyArray';
 import { SearchResult } from './SearchResults';
 
 export class Species extends Base<any> {
-	public readonly films: any;
-	public readonly characters: any;
+	d
 	constructor(data: any) {
 		super(data);
 
@@ -52,6 +51,14 @@ export class Species extends Base<any> {
 	public get skinColors(): string {
 		return this.data.skin_colors;
 	}
+
+	public get films(): CURL[] {
+		return this.data.films;
+	}
+
+	public get characters(): CURL[] {
+		return this.data.people;
+	}
 }
 
 export const get = async (id: CURL | ID) => {
@@ -64,10 +71,20 @@ export const search = async (query: string) => {
 	return new SearchResult(data, Species);
 }
 
+declare module './Base' {
+	// tslint:disable-next-line:no-shadowed-variable
+	interface Base<T> {
+		getSpacies(): Array<Promise<Spacies>> | null;
+	}
+}
+
 // little trick to make it support modules
-Base.prototype.getSpeciesList = (data: any) => {
-	const urls = data.species;
-	return getLazyArray(urls, get);
+Base.prototype.getSpacies = function() {
+	if (this.data.spacies) {
+		return getLazyArray(this.data.spacies, get);
+	}
+
+	return null;
 }
 /*
 

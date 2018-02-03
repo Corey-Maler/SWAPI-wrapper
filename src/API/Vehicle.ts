@@ -4,11 +4,8 @@ import { getLazyArray } from './LazyArray';
 import { SearchResult } from './SearchResults';
 
 export class Vehicle extends Base<any> {
-	public readonly films: any;
 	constructor(data: any) {
 		super(data);
-
-		this.films = this.getFilmList(data);
 	}
 
 	public get cargeCapacity(): number {
@@ -54,6 +51,10 @@ export class Vehicle extends Base<any> {
 	public get vehicleClass(): string {
 		return this.data.vehicle_class;
 	}
+
+	public get films(): CURL {
+		return this.data.films;
+	}
 }
 
 export const get = async (id: CURL | ID) => {
@@ -66,10 +67,20 @@ export const search = async (query: string) => {
 	return new SearchResult(data, Vehicle);
 }
 
+declare module './Base' {
+	// tslint:disable-next-line:no-shadowed-variable
+	interface Base<T> {
+		getVehicles(): Array<Promise<Vehicle>> | null;
+	}
+}
+
 // little trick to make it support modules
-Base.prototype.getVehicleList = (data: any) => {
-	const urls = data.characters;
-	return getLazyArray(urls, get);
+Base.prototype.getVehicles = function() {
+	if (this.data.vehicles) {
+		return getLazyArray(this.data.vehicles, get);
+	}
+
+	return null;
 }
 
 /*

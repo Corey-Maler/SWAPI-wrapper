@@ -4,17 +4,8 @@ import { getLazyArray } from './LazyArray';
 import { SearchResult } from './SearchResults';
 
 export class Character extends Base<any> {
-	public readonly films: any;
-	public readonly species: any;
-	public readonly vehicles: any;
-	public readonly starships: any;
 	constructor(data: any) {
 		super(data);
-
-		this.films = this.getFilmList(data);
-		this.species = this.getSpeciesList(data);
-		this.vehicles = this.getVehicleList(data);
-		this.starships = this.getStarshipList(data);
 	}
 
 	public get name(): string {
@@ -48,6 +39,22 @@ export class Character extends Base<any> {
 	public get CURL(): string {
 		return getCurl(this.data);
 	}
+
+	public get films(): CURL[] {
+		return this.data.films;
+	}
+
+	public get vehicles(): CURL[] {
+		return this.data.vehicles;
+	}
+
+	public get species(): string[] {
+		return this.data.species;
+	}
+
+	public get starships(): string[] {
+		return this.data.starships;
+	}
 }
 
 export const get = async (id: CURL | ID) => {
@@ -60,15 +67,24 @@ export const search = async (query: string) => {
 	return new SearchResult(data, Character);
 }
 
-// little trick to make it support modules
-Base.prototype.getCharactersList = (data: any) => {
-	const urls = data.characters;
-	return getLazyArray(urls, get);
+declare module './Base' {
+	// tslint:disable-next-line:no-shadowed-variable
+	interface Base<T> {
+		getCharacters(): Array<Promise<Character>> | null;
+	}
 }
 
-Base.prototype.getPeopleList = (data: any) => {
-	const urls = data.people;
-	return getLazyArray(urls, get);
+// little trick to make it support modules
+Base.prototype.getCharacters = function() {
+	if (this.data.people) {
+		return getLazyArray(this.data.people, get);
+	}
+
+	if (this.data.characters) {
+		return getLazyArray(this.data.people, get);
+	}
+
+	return null;
 }
 
 /*

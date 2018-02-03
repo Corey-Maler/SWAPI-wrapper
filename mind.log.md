@@ -227,3 +227,22 @@ It means that we can still use `Object.defineProperty` as well instead `Proxy`.
 ### Search!
 
 Let's implement searching. It will be as `Module.search(): Promise<SearchResult<Module>>`
+
+### More typings
+
+Let's fix "any" type in Lazy Array.
+
+Actually in typescript it's pretty difficult and tricky to redeclare module. In pure js you can just change "prototype", but in typescript you can make something like "patch" of external module declaration, but intertnal not. I will try to find a way.
+
+### Big problem
+
+The reason why you cannot redeclare type/module/whatever is: you can use this types inside this modules and redeclaration will break this parts of code.
+The right way is only extend module. But you cannot declare getter/setter via prototype, so I have only one way: extend `Base` class with some new methods like `getFilms(): LazyArray<Film>`.
+
+That's why I actually love typescript: if you decied to do some stupid API just because you can do this with power of javascript, you won't be able to do it because of limitations of typescript (or you will lose typeguarding).
+
+Again -- you can redecrale parts and my idea will work if I will separait my code as few npm-modules. But now I will just extend `Base` class with some methods.
+
+By the way, it's much better to insert another method when extending API instead modifying existing because if somebody will use your API and after while he will import another module which change existing behaviour, probably he will have to rewrite thousands lines of broken code.
+
+Funny, but webpack-tree-shaking removes files if you are not using some of code inside file. This is good from one hand and bad from other. I will think how we can fix it.

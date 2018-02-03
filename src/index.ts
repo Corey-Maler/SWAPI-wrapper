@@ -11,9 +11,10 @@ SWAPI.setCacheStragy(new ForeverStrategy());
 import { getLazyArray } from './API/LazyArray';
 
 const testFilm = async () => {
-	/*
+	
 	const film = await Film.get('1');
 
+	/*
 	console.log('Film #1 title: ', film.title);
 
 	const character = await Character.get('1');
@@ -39,6 +40,11 @@ const testFilm = async () => {
 	const searchResult = await Character.search('e');
 	console.log('search result > ', searchResult);
 	console.log('first > ', searchResult.results[0].name);
+	const Luke = searchResult.results[0];
+	const film1 = await Luke.films[0];
+	const film2 = await Luke.getFilms()[0];
+
+	console.log('should be "string" and "[object Object]"', typeof film1, typeof film2);
 
 	const searchResult2 = await searchResult.next;
 	console.log('search result page 2 > ', searchResult2);
