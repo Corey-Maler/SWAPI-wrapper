@@ -26,5 +26,19 @@ class LazyArray {
 }
 
 export const getLazyArray = (urls: any[], factory: any) => {
-	return new Proxy(new LazyArray(urls, factory), handler);
+	const res = urls.slice(0); // copy array for more safety
+
+	// tslint:disable-next-line:prefer-for-of
+	for (let i = 0; i < urls.length; i++) {
+		const url = urls[i];
+		Object.defineProperty(res, i.toString(), {
+			enumerable: true,
+			get() {
+				return factory(url);
+			},
+		});
+	}
+
+	return res;
+	//return new Proxy(new LazyArray(urls, factory), handler);
 };

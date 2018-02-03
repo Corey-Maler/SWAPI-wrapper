@@ -28,6 +28,11 @@ const testFilm = async () => {
 
 	const starship = await film2.starships[0];
 	console.log('we didn\'t import starship class, vehicle1 should be just a link', starship);
+
+	film2.characters.forEach(async (t: any) => {
+		const ch = await t;
+		console.log(`Character of ${film2.title}: ${ch.name}`)
+	});
 };
 
 testFilm();

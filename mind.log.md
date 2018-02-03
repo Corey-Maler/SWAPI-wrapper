@@ -201,3 +201,25 @@ If some class included, you can easily get object of it, passing throught proper
 const character = await film.characters[0];
 character.name // Luke Skywalker
 ```
+
+# Let's improve our code
+
+After while I noticed that my "Lazy array" actually not an array. It even doesn't looks lika array. We need to fix it.
+
+What do we know about it? It can't be changed dynamecly, so we can use real array and `freeze` it after filling. To make it lazy we need to set getters somehow one elements, accesable by index. So, we can make this trick with our knowledge about arrays in js. By some historical reasons, regular (not typed) array in js is just usual object. We you are writing
+```
+const t = [0, 1, 2];
+```
+
+In fact it's equal to:
+```
+const t = {0: 1, 1: 2, 2: 3};
+
+t.__proto__ = Array.prototype.
+
+// Somewhere inside engine: t[[Class]] = 'Array';
+// You cannot override this [Class] property manually, so that's why this code is not equivalent
+
+```
+
+It means that we can still use `Object.defineProperty` as well instead `Proxy`.
