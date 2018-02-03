@@ -223,3 +223,7 @@ t.__proto__ = Array.prototype.
 ```
 
 It means that we can still use `Object.defineProperty` as well instead `Proxy`.
+
+### Search!
+
+Let's implement searching. It will be as `Module.search(): Promise<SearchResult<Module>>`

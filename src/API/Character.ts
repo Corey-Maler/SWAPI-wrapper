@@ -1,6 +1,7 @@
 import { backend, Base } from './Base';
 import { CURL, ID, getCurl } from './utils';
 import { getLazyArray } from './LazyArray';
+import { SearchResult } from './SearchResults';
 
 export class Character extends Base<any> {
 	public readonly films: any;
@@ -52,6 +53,11 @@ export class Character extends Base<any> {
 export const get = async (id: CURL | ID) => {
 	const data = await backend.get(id, '/people/');
 	return new Character(data);
+}
+
+export const search = async (query: string) => {
+	const data = await backend.get(`?search=${query}`, '/people/', false);
+	return new SearchResult(data, Character);
 }
 
 // little trick to make it support modules

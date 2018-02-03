@@ -47,12 +47,15 @@ export class Base<T> {
 let currentCacheStrategy: CacheStrategy<any> | null = null;
 
 export const backend = {
-	get(id: ID | CURL, path: string) {
+	getClear(url: CURL) {
+		return fetch(url).then((response: any) => response.json());
+	},
+	get(id: ID | CURL, resource: string, autoclose?: boolean) {
 		let query;
-		if (typeof id === 'string' && id.includes(path)) {
+		if (typeof id === 'string' && id.includes(resource)) {
 			query = id;
 		} else {
-			query = Base.root + path + id + '/';
+			query = Base.root + resource + id + (autoclose ? '/' : '');
 		}
 
 		let request;
