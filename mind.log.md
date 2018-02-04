@@ -246,3 +246,15 @@ Again -- you can redecrale parts and my idea will work if I will separait my cod
 By the way, it's much better to insert another method when extending API instead modifying existing because if somebody will use your API and after while he will import another module which change existing behaviour, probably he will have to rewrite thousands lines of broken code.
 
 Funny, but webpack-tree-shaking removes files if you are not using some of code inside file. This is good from one hand and bad from other. I will think how we can fix it.
+
+## Final steps
+
+Of course it's still a lot of work. But main parts are:
+- building and publishing
+- testing
+- documentation
+- some travis.ci intergration
+
+### Let's start from building
+
+I've used rxjs for inspiration, so I think that this project is good place to start building system.
