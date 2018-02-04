@@ -4,12 +4,8 @@ import { getLazyArray } from './LazyArray';
 import { SearchResult } from './SearchResults';
 
 export class Species extends Base<any> {
-	d
 	constructor(data: any) {
 		super(data);
-
-		this.films = this.getFilmList(data);
-		this.characters = this.getPeopleList(data);
 	}
 
 	public get name(): string {
@@ -74,7 +70,7 @@ export const search = async (query: string) => {
 declare module './Base' {
 	// tslint:disable-next-line:no-shadowed-variable
 	interface Base<T> {
-		getSpacies(): Array<Promise<Spacies>> | null;
+		getSpacies(): Array<Promise<Species>> | null;
 	}
 }
 

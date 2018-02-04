@@ -71,7 +71,7 @@ export class Starship extends Base<any> {
 	}
 
 	public get films(): CURL[] {
-		return this.data.films[];
+		return this.data.films;
 	}
 }
 

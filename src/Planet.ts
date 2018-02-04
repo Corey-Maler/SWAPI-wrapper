@@ -55,7 +55,7 @@ export const get = async (id: CURL | ID) => {
 }
 
 export const search = async (query: string) => {
-	const data = await backend.get(`?search=${query}`, '/planet/', false);
+	const data = await backend.get(`?search=${query}`, '/planets/', false);
 	return new SearchResult(data, Planet);
 }
 

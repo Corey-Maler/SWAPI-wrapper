@@ -1,0 +1,7 @@
+{
+	"extends": "../tsconfig.json",
+	"files": [
+		"../dist/src/index.ts",
+		"../dist/src/SWAPI.ts"
+	]
+}
