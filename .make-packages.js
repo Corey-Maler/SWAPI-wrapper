@@ -39,9 +39,9 @@ delete pkg.scripts;
 fs.removeSync(PKG_ROOT);
 
 let rootPackageJson = Object.assign({}, pkg, {
-  name: 'rxjs',
-  main: './Rx.js',
-  typings: './Rx.d.ts'
+  name: 'nice-swapi',
+  main: './SWAPI.js',
+  typings: './SWAPI.d.ts'
 });
 
 // Get a list of the file names. Sort in reverse order so re-export files
